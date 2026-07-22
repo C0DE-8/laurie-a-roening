@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Laurie birthday favicon">
+  <rect width="64" height="64" rx="14" fill="#fff9f1"/>
+  <path d="M32 52S12 40 12 24c0-8 6-14 14-14 4 0 7 2 10 5 3-3 6-5 10-5 8 0 14 6 14 14 0 16-20 28-28 28Z" fill="#c8305d"/>
+  <path d="M24 24h16v4H24zM28 16h8v8h-8z" fill="#ffe9bd"/>
+  <text x="32" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#fff9f1">L</text>
+</svg>

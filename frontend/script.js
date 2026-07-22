@@ -61,10 +61,12 @@ function burstConfetti(amount = 140) {
   drawConfetti();
 }
 
-function openCard() {
+function openCard(options = {}) {
   card.classList.add("is-open");
-  card.scrollIntoView({ behavior: "smooth", block: "center" });
-  burstConfetti(90);
+  card.scrollIntoView({ behavior: options.instant ? "auto" : "smooth", block: "center" });
+  if (!options.quiet) {
+    burstConfetti(90);
+  }
 }
 
 resizeCanvas();
@@ -79,3 +81,7 @@ blowCandle.addEventListener("click", () => {
   blowCandle.textContent = cake.classList.contains("wished") ? "Wish made" : "Make a wish";
   burstConfetti(110);
 });
+
+if (window.location.hash === "#card") {
+  window.requestAnimationFrame(() => openCard({ instant: true, quiet: true }));
+}

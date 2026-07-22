@@ -353,17 +353,44 @@ h2 {
 
 .birthday-card {
   position: relative;
-  width: min(100%, 900px);
-  min-height: 520px;
+  width: min(100%, 980px);
+  min-height: 560px;
   perspective: 2200px;
+  transform-style: preserve-3d;
 }
 
 .card-cover,
 .card-pages {
   position: absolute;
   inset: 0;
-  min-height: 520px;
+  min-height: 560px;
   border-radius: 8px;
+}
+
+.birthday-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  border-radius: 8px 8px 0 0;
+  background: #d5c7bb;
+  transform: skewX(-45deg);
+  transform-origin: bottom;
+}
+
+.birthday-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -7px;
+  width: 7px;
+  height: 100%;
+  border-radius: 0 8px 8px 0;
+  background: #a08f89;
+  transform: skewY(-45deg);
+  transform-origin: left;
 }
 
 .card-cover {
@@ -375,13 +402,14 @@ h2 {
   border: 0;
   color: #fff9f1;
   background:
-    linear-gradient(135deg, rgba(111, 23, 57, 0.96), rgba(200, 48, 93, 0.94)),
+    radial-gradient(circle at 24% 20%, rgba(255, 233, 189, 0.22), transparent 22rem),
+    linear-gradient(135deg, rgba(111, 23, 57, 0.98), rgba(200, 48, 93, 0.95)),
     repeating-linear-gradient(90deg, transparent 0 22px, rgba(255, 255, 255, 0.08) 22px 24px);
-  box-shadow: inset 18px 0 36px rgba(40, 8, 23, 0.3), var(--shadow);
+  box-shadow: inset 340px 0 54px rgba(39, 9, 23, 0.44), 24px 10px 58px rgba(79, 20, 43, 0.32);
   cursor: pointer;
   transform-origin: left center;
   transform-style: preserve-3d;
-  transition: transform 900ms cubic-bezier(0.2, 0.74, 0.2, 1), box-shadow 900ms ease;
+  transition: transform 900ms cubic-bezier(0.2, 0.74, 0.2, 1), box-shadow 900ms ease, filter 900ms ease;
 }
 
 .card-cover::before {
@@ -392,9 +420,19 @@ h2 {
   border-radius: 6px;
 }
 
-.cover-mark {
-  width: 92px;
-  height: 92px;
+.card-bark {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  opacity: 0;
+  background: rgba(224, 225, 220, 0.24);
+  transition: opacity 650ms ease, box-shadow 650ms ease;
+}
+
+.cover-art {
+  position: relative;
+  width: 112px;
+  height: 112px;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -404,6 +442,19 @@ h2 {
   font-weight: 700;
   background: var(--cream);
   box-shadow: 0 12px 30px rgba(40, 8, 23, 0.22);
+}
+
+.cover-crown {
+  position: absolute;
+  top: 18px;
+  font-size: 2rem;
+}
+
+.cover-heart {
+  position: absolute;
+  bottom: 18px;
+  color: var(--rose);
+  font-size: 2.5rem;
 }
 
 .cover-title {
@@ -420,31 +471,86 @@ h2 {
 
 .card-pages {
   z-index: 1;
-  padding: clamp(24px, 5vw, 58px);
+  overflow: hidden;
+  padding: clamp(22px, 4vw, 44px);
   background:
-    linear-gradient(90deg, rgba(111, 23, 57, 0.08), transparent 11%),
-    linear-gradient(135deg, #fffdf8, #fff3df);
+    linear-gradient(90deg, rgba(111, 23, 57, 0.13), transparent 9%),
+    repeating-linear-gradient(90deg, transparent 0 9px, rgba(111, 23, 57, 0.035) 9px 10px),
+    linear-gradient(135deg, #fffdf8, #fff3df 72%, #ffe9bd);
   box-shadow: var(--shadow);
 }
 
+.birthday-card:hover .card-cover,
 .birthday-card.is-open .card-cover {
-  transform: rotateY(-132deg);
-  box-shadow: inset 10px 0 24px rgba(40, 8, 23, 0.26), 14px 20px 38px rgba(79, 20, 43, 0.16);
+  transform: rotateY(-135deg) rotateZ(2deg) scale(1.02);
+  box-shadow: inset 24px 0 46px rgba(40, 8, 23, 0.32), 0 18px 82px rgba(79, 20, 43, 0.24);
+  filter: saturate(1.03);
 }
 
-.message-panel {
-  max-width: 640px;
-  margin-left: auto;
+.birthday-card:hover .card-bark,
+.birthday-card.is-open .card-bark {
+  opacity: 1;
+  box-shadow: 330px 210px 110px rgba(40, 8, 23, 0.35) inset;
+}
+
+.page-stack {
+  height: 100%;
+  min-height: 472px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding-left: clamp(20px, 8vw, 92px);
+}
+
+.note-page {
+  position: relative;
+  min-height: 212px;
+  padding: 20px 20px 18px;
+  border: 1px solid rgba(111, 23, 57, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, 0.86);
+  box-shadow: 0 10px 26px rgba(79, 20, 43, 0.08);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
-  line-height: 1.62;
+  transform: rotate(var(--tilt, -1deg));
 }
 
-.message-panel p {
-  margin: 0 0 18px;
+.note-page-one {
+  --tilt: -1.3deg;
 }
 
-.message-kicker,
+.note-page-two {
+  --tilt: 1deg;
+}
+
+.note-page-three {
+  --tilt: 0.8deg;
+}
+
+.note-page-four {
+  --tilt: -0.8deg;
+}
+
+.page-number {
+  margin: 0 0 8px;
+  color: var(--teal);
+  font: 800 0.72rem/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.note-page h3 {
+  margin: 0 0 12px;
+  color: var(--wine);
+  font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+  line-height: 1;
+}
+
+.note-page p {
+  margin: 0 0 11px;
+  color: #4d3944;
+  font-size: clamp(0.95rem, 1.55vw, 1.12rem);
+  line-height: 1.48;
+}
+
 .signature {
   color: var(--wine);
   font-weight: 700;
@@ -544,14 +650,48 @@ h2 {
     grid-template-columns: 1fr;
   }
 
-  .birthday-card,
-  .card-cover,
-  .card-pages {
-    min-height: 650px;
+  .birthday-card {
+    min-height: auto;
+    perspective: 1600px;
   }
 
+  .card-cover,
+  .card-pages {
+    position: relative;
+    inset: auto;
+    min-height: auto;
+  }
+
+  .card-cover {
+    min-height: 430px;
+    box-shadow: inset 180px 0 46px rgba(39, 9, 23, 0.34), 20px 12px 44px rgba(79, 20, 43, 0.24);
+  }
+
+  .card-pages {
+    max-height: 0;
+    margin-top: 18px;
+    opacity: 0;
+    transition: max-height 700ms ease, opacity 500ms ease;
+  }
+
+  .page-stack {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding-left: 0;
+  }
+
+  .note-page {
+    min-height: auto;
+  }
+
+  .birthday-card:hover .card-cover,
   .birthday-card.is-open .card-cover {
-    transform: rotateY(-118deg);
+    transform: perspective(1600px) rotateY(-10deg) rotateZ(1deg);
+  }
+
+  .birthday-card.is-open .card-pages {
+    max-height: 1800px;
+    opacity: 1;
   }
 }
 
@@ -586,13 +726,44 @@ h2 {
     bottom: 12px;
   }
 
-  .birthday-card,
-  .card-cover,
-  .card-pages {
-    min-height: 760px;
+  .card-section,
+  .letter {
+    padding: 42px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 22px;
+  }
+
+  .card-cover {
+    min-height: 360px;
+    gap: 14px;
   }
 
   .card-pages {
     padding: 24px 18px;
+  }
+
+  .cover-art {
+    width: 88px;
+    height: 88px;
+  }
+
+  .cover-title {
+    font-size: clamp(3.4rem, 18vw, 4.8rem);
+  }
+
+  .cover-subtitle {
+    width: min(240px, 80vw);
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .note-page {
+    padding: 18px 16px 16px;
+  }
+
+  .note-page p {
+    font-size: 0.98rem;
   }
 }

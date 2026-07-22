@@ -352,22 +352,19 @@ h2 {
 }
 
 .birthday-card {
-  position: relative;
   width: min(100%, 980px);
-  min-height: 560px;
-  perspective: 2200px;
+  scroll-margin-top: 28px;
+}
+
+.book-spread {
+  position: relative;
+  height: clamp(480px, 56vw, 560px);
+  perspective: 2400px;
   transform-style: preserve-3d;
+  filter: drop-shadow(0 28px 48px rgba(79, 20, 43, 0.24));
 }
 
-.card-cover,
-.card-pages {
-  position: absolute;
-  inset: 0;
-  min-height: 560px;
-  border-radius: 8px;
-}
-
-.birthday-card::before {
+.book-spread::before {
   content: "";
   position: absolute;
   top: -7px;
@@ -380,7 +377,7 @@ h2 {
   transform-origin: bottom;
 }
 
-.birthday-card::after {
+.book-spread::after {
   content: "";
   position: absolute;
   top: 0;
@@ -393,26 +390,157 @@ h2 {
   transform-origin: left;
 }
 
-.card-cover {
-  z-index: 2;
+.book-half,
+.book-flip {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.book-half {
+  padding: clamp(26px, 4vw, 46px);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 9px, rgba(111, 23, 57, 0.035) 9px 10px),
+    linear-gradient(135deg, #fffdf8, #fff3df 76%, #ffe9bd);
+  box-shadow: inset 0 0 0 1px rgba(111, 23, 57, 0.08);
+}
+
+.book-left {
+  left: 0;
+  border-radius: 8px 0 0 8px;
+  box-shadow: inset -20px 0 30px rgba(111, 23, 57, 0.08);
+}
+
+.book-right {
+  right: 0;
+  border-radius: 0 8px 8px 0;
+  box-shadow: inset 20px 0 30px rgba(111, 23, 57, 0.08);
+}
+
+.book-left::after,
+.book-right::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 22px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.book-left::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(111, 23, 57, 0.12));
+}
+
+.book-right::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(111, 23, 57, 0.12), transparent);
+}
+
+.book-flip {
+  left: 50%;
+  z-index: var(--z, 4);
+  border: 0;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 900ms cubic-bezier(0.2, 0.74, 0.2, 1), z-index 0ms linear 450ms;
+}
+
+.book-flip.is-flipped {
+  transform: rotateY(-180deg);
+}
+
+.book-hit-area {
+  position: absolute;
+  top: 0;
+  z-index: 20;
+  width: 50%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.book-hit-left {
+  left: 0;
+}
+
+.book-hit-right {
+  right: 0;
+}
+
+.book-hit-area::after {
+  position: absolute;
+  top: 50%;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: rgba(111, 23, 57, 0.72);
+  box-shadow: 0 14px 28px rgba(79, 20, 43, 0.22);
+  opacity: 0;
+  transform: translateY(-50%) scale(0.86);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.book-hit-left::after {
+  content: "‹";
+  left: 18px;
+}
+
+.book-hit-right::after {
+  content: "›";
+  right: 18px;
+}
+
+.book-hit-area:hover::after,
+.book-hit-area:focus-visible::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.book-hit-area:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.book-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  border-radius: 0 8px 8px 0;
+}
+
+.book-back {
+  border-radius: 8px 0 0 8px;
+  transform: rotateY(180deg);
+}
+
+.cover-front {
   display: grid;
   place-items: center;
   align-content: center;
   gap: 18px;
-  border: 0;
   color: #fff9f1;
   background:
-    radial-gradient(circle at 24% 20%, rgba(255, 233, 189, 0.22), transparent 22rem),
+    radial-gradient(circle at 24% 20%, rgba(255, 233, 189, 0.22), transparent 20rem),
     linear-gradient(135deg, rgba(111, 23, 57, 0.98), rgba(200, 48, 93, 0.95)),
     repeating-linear-gradient(90deg, transparent 0 22px, rgba(255, 255, 255, 0.08) 22px 24px);
-  box-shadow: inset 340px 0 54px rgba(39, 9, 23, 0.44), 24px 10px 58px rgba(79, 20, 43, 0.32);
-  cursor: pointer;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 900ms cubic-bezier(0.2, 0.74, 0.2, 1), box-shadow 900ms ease, filter 900ms ease;
+  box-shadow: inset 260px 0 48px rgba(39, 9, 23, 0.42);
 }
 
-.card-cover::before {
+.cover-front::before {
   content: "";
   position: absolute;
   inset: 22px;
@@ -423,10 +551,33 @@ h2 {
 .card-bark {
   position: absolute;
   inset: 0;
-  border-radius: 8px;
   opacity: 0;
   background: rgba(224, 225, 220, 0.24);
   transition: opacity 650ms ease, box-shadow 650ms ease;
+}
+
+.book-cover:hover .card-bark,
+.book-cover.is-flipped .card-bark {
+  opacity: 1;
+  box-shadow: 260px 190px 90px rgba(40, 8, 23, 0.35) inset;
+}
+
+.cover-back {
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  padding: clamp(24px, 4vw, 42px);
+  color: var(--wine);
+  background:
+    linear-gradient(90deg, rgba(111, 23, 57, 0.13), transparent 18%),
+    linear-gradient(135deg, #fffdf8, #fff1dc);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+}
+
+.cover-back strong {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
 }
 
 .cover-art {
@@ -459,96 +610,63 @@ h2 {
 
 .cover-title {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3rem, 10vw, 7rem);
+  font-size: clamp(3rem, 8vw, 6.2rem);
   line-height: 0.9;
 }
 
 .cover-subtitle {
+  width: min(280px, 80%);
+  text-align: center;
   font-weight: 800;
   letter-spacing: 0.08em;
+  line-height: 1.35;
   text-transform: uppercase;
 }
 
-.card-pages {
-  z-index: 1;
-  overflow: hidden;
-  padding: clamp(22px, 4vw, 44px);
-  background:
-    linear-gradient(90deg, rgba(111, 23, 57, 0.13), transparent 9%),
-    repeating-linear-gradient(90deg, transparent 0 9px, rgba(111, 23, 57, 0.035) 9px 10px),
-    linear-gradient(135deg, #fffdf8, #fff3df 72%, #ffe9bd);
-  box-shadow: var(--shadow);
+.sheet-one {
+  --z: 3;
 }
 
-.birthday-card:hover .card-cover,
-.birthday-card.is-open .card-cover {
-  transform: rotateY(-135deg) rotateZ(2deg) scale(1.02);
-  box-shadow: inset 24px 0 46px rgba(40, 8, 23, 0.32), 0 18px 82px rgba(79, 20, 43, 0.24);
-  filter: saturate(1.03);
+.sheet-two {
+  --z: 2;
 }
 
-.birthday-card:hover .card-bark,
-.birthday-card.is-open .card-bark {
-  opacity: 1;
-  box-shadow: 330px 210px 110px rgba(40, 8, 23, 0.35) inset;
-}
-
-.page-stack {
-  height: 100%;
-  min-height: 472px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  padding-left: clamp(20px, 8vw, 92px);
+.sheet-three {
+  --z: 1;
 }
 
 .note-page {
-  position: relative;
-  min-height: 212px;
-  padding: 20px 20px 18px;
-  border: 1px solid rgba(111, 23, 57, 0.1);
-  border-radius: 8px;
-  background: rgba(255, 253, 248, 0.86);
-  box-shadow: 0 10px 26px rgba(79, 20, 43, 0.08);
+  padding: clamp(22px, 3.4vw, 42px);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 32px, rgba(111, 23, 57, 0.055) 32px 33px),
+    linear-gradient(135deg, #fffdf8, #fff3df 78%, #ffe9bd);
+  box-shadow: inset 0 0 0 1px rgba(111, 23, 57, 0.08);
   font-family: Georgia, "Times New Roman", serif;
-  transform: rotate(var(--tilt, -1deg));
-}
-
-.note-page-one {
-  --tilt: -1.3deg;
-}
-
-.note-page-two {
-  --tilt: 1deg;
-}
-
-.note-page-three {
-  --tilt: 0.8deg;
-}
-
-.note-page-four {
-  --tilt: -0.8deg;
 }
 
 .page-number {
-  margin: 0 0 8px;
+  margin: 0 0 12px;
   color: var(--teal);
   font: 800 0.72rem/1 Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
+.book-half h3,
 .note-page h3 {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   color: var(--wine);
-  font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.55rem, 3vw, 2.55rem);
   line-height: 1;
 }
 
+.book-half p,
 .note-page p {
-  margin: 0 0 11px;
+  margin: 0 0 13px;
   color: #4d3944;
-  font-size: clamp(0.95rem, 1.55vw, 1.12rem);
-  line-height: 1.48;
+  font-size: clamp(0.98rem, 1.55vw, 1.16rem);
+  line-height: 1.55;
 }
 
 .signature {
@@ -556,20 +674,67 @@ h2 {
   font-weight: 700;
 }
 
+.book-controls {
+  width: min(100%, 980px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+#pageStatus {
+  min-width: 112px;
+  margin: 0;
+  border: 1px solid rgba(111, 23, 57, 0.1);
+  border-radius: 999px;
+  padding: 9px 14px;
+  color: var(--muted);
+  background: rgba(255, 249, 241, 0.78);
+  font-weight: 800;
+  text-align: center;
+}
+
 .promise-band {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: rgba(111, 23, 57, 0.16);
-  box-shadow: var(--shadow);
+  gap: 16px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  perspective: 1400px;
 }
 
-.promise-band div {
-  min-height: 132px;
+.promise-card {
+  position: relative;
+  min-height: 174px;
   padding: 24px;
-  background: rgba(255, 249, 241, 0.82);
+  border: 1px solid rgba(111, 23, 57, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 243, 223, 0.86)),
+    radial-gradient(circle at 84% 16%, rgba(247, 183, 51, 0.18), transparent 9rem);
+  box-shadow: 0 18px 42px rgba(79, 20, 43, 0.12);
+  transform: translateY(0) rotateX(0);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.promise-card::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  opacity: 0.16;
+}
+
+.promise-card:hover {
+  border-color: rgba(200, 48, 93, 0.28);
+  box-shadow: 0 26px 56px rgba(79, 20, 43, 0.2);
+  transform: translateY(-8px) rotateX(3deg);
 }
 
 .promise-band span {
@@ -589,22 +754,96 @@ h2 {
   line-height: 1.05;
 }
 
+.promise-band p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
 .letter {
-  max-width: 1050px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.letter-card {
+  position: relative;
+  padding: clamp(30px, 6vw, 68px);
+  border: 1px solid rgba(111, 23, 57, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(111, 23, 57, 0.05) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(0deg, transparent 0 35px, rgba(111, 23, 57, 0.055) 35px 36px),
+    linear-gradient(135deg, #fffdf8, #fff7ec 70%, #ffe9bd);
+  background-size: 100% 100%, 100% 36px, 100% 100%;
+  box-shadow: 0 28px 70px rgba(79, 20, 43, 0.16);
+}
+
+.letter-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(24px, 5vw, 54px);
+  width: 2px;
+  height: 100%;
+  background: rgba(200, 48, 93, 0.18);
+}
+
+.letter-card::after {
+  content: "♥";
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff9f1;
+  background: linear-gradient(135deg, var(--wine), var(--rose));
+  box-shadow: 0 14px 28px rgba(200, 48, 93, 0.22);
+}
+
+.letter-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-right: 70px;
+}
+
+.letter-topline span {
+  color: var(--rose);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .letter-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px 42px;
-  margin-top: 28px;
+  margin-top: 32px;
+  padding-left: clamp(18px, 4vw, 38px);
 }
 
 .letter-grid p {
   margin: 0;
   color: #4d3944;
-  font-size: 1.08rem;
-  line-height: 1.75;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.24rem);
+  line-height: 1.85;
+}
+
+.letter-signature {
+  margin: 34px 0 0;
+  padding-left: clamp(18px, 4vw, 38px);
+  color: var(--wine);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 5vw, 3.3rem);
+  font-weight: 700;
+  line-height: 1;
 }
 
 @keyframes flicker {
@@ -650,48 +889,62 @@ h2 {
     grid-template-columns: 1fr;
   }
 
-  .birthday-card {
-    min-height: auto;
-    perspective: 1600px;
+  .promise-band {
+    gap: 14px;
   }
 
-  .card-cover,
-  .card-pages {
-    position: relative;
-    inset: auto;
-    min-height: auto;
+  .book-spread {
+    height: min(640px, 142vw);
+    perspective: 1700px;
   }
 
-  .card-cover {
-    min-height: 430px;
-    box-shadow: inset 180px 0 46px rgba(39, 9, 23, 0.34), 20px 12px 44px rgba(79, 20, 43, 0.24);
+  .book-half,
+  .book-flip {
+    width: 100%;
   }
 
-  .card-pages {
-    max-height: 0;
-    margin-top: 18px;
-    opacity: 0;
-    transition: max-height 700ms ease, opacity 500ms ease;
+  .book-left {
+    display: none;
   }
 
-  .page-stack {
-    min-height: auto;
-    grid-template-columns: 1fr;
-    padding-left: 0;
+  .book-right,
+  .book-flip {
+    left: 0;
+    right: auto;
   }
 
-  .note-page {
-    min-height: auto;
+  .book-half,
+  .book-face,
+  .book-back {
+    border-radius: 8px;
   }
 
-  .birthday-card:hover .card-cover,
-  .birthday-card.is-open .card-cover {
-    transform: perspective(1600px) rotateY(-10deg) rotateZ(1deg);
+  .book-half::before,
+  .book-half::after {
+    display: none;
   }
 
-  .birthday-card.is-open .card-pages {
-    max-height: 1800px;
-    opacity: 1;
+  .cover-front {
+    box-shadow: inset 180px 0 46px rgba(39, 9, 23, 0.34);
+  }
+
+  .book-hit-area {
+    width: 50%;
+  }
+
+  .book-hit-area::after {
+    opacity: 0.86;
+    transform: translateY(-50%) scale(0.9);
+  }
+
+  .letter-topline {
+    display: block;
+    padding-right: 58px;
+  }
+
+  .letter-topline span {
+    display: block;
+    margin-top: 8px;
   }
 }
 
@@ -735,13 +988,8 @@ h2 {
     margin-bottom: 22px;
   }
 
-  .card-cover {
-    min-height: 360px;
-    gap: 14px;
-  }
-
-  .card-pages {
-    padding: 24px 18px;
+  .book-spread {
+    height: min(600px, 136vw);
   }
 
   .cover-art {
@@ -760,10 +1008,46 @@ h2 {
   }
 
   .note-page {
-    padding: 18px 16px 16px;
+    padding: 22px 18px 18px;
   }
 
   .note-page p {
-    font-size: 0.98rem;
+    font-size: 0.97rem;
+    line-height: 1.48;
+  }
+
+  .book-half h3,
+  .note-page h3 {
+    font-size: clamp(1.55rem, 8vw, 2.2rem);
+  }
+
+  #pageStatus {
+    min-width: 76px;
+    font-size: 0.9rem;
+  }
+
+  .promise-card {
+    min-height: 152px;
+    padding: 22px;
+  }
+
+  .letter-card {
+    padding: 28px 20px 32px;
+  }
+
+  .letter-card::before {
+    left: 14px;
+  }
+
+  .letter-card::after {
+    top: 22px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .letter-grid,
+  .letter-signature {
+    padding-left: 16px;
   }
 }

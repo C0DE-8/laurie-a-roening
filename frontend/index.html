@@ -80,19 +80,47 @@
           <h2 id="card-title">A love note wrapped in gold</h2>
         </div>
 
-        <article class="birthday-card" id="birthdayCard" aria-label="3D birthday book for Laurie">
-          <button class="card-cover" id="cardCover" type="button" aria-label="Open Laurie's birthday card">
-            <span class="card-bark"></span>
-            <span class="cover-art" aria-hidden="true">
-              <span class="cover-crown">♛</span>
-              <span class="cover-heart">♥</span>
-            </span>
-            <span class="cover-title">Laurie</span>
-            <span class="cover-subtitle">Happy Birthday, my queen</span>
-          </button>
-          <div class="card-pages">
-            <div class="page-stack">
-              <section class="note-page note-page-one">
+        <article class="birthday-card" id="birthdayCard" aria-label="Flipping birthday book for Laurie">
+          <div class="book-spread" id="bookSpread">
+            <div class="book-half book-left">
+              <p class="page-number">Inside cover</p>
+              <h3>For Laurie</h3>
+              <p>
+                A little book for the woman who stole my heart, became my peace,
+                and made love feel like home.
+              </p>
+              <p class="signature">Today belongs to you.</p>
+            </div>
+            <div class="book-half book-right">
+              <p class="page-number">Forever</p>
+              <h3>My final wish</h3>
+              <p>
+                Dance, laugh, smile, and make beautiful memories. When we are
+                together, I will make up for every hug, every kiss, and every
+                moment we have been apart.
+              </p>
+              <p class="signature">I love you more than words can express.</p>
+            </div>
+
+            <button class="book-flip book-cover" id="cardCover" type="button" aria-label="Open Laurie's birthday book">
+              <span class="book-face book-front cover-front">
+                <span class="card-bark"></span>
+                <span class="cover-art" aria-hidden="true">
+                  <span class="cover-crown">♛</span>
+                  <span class="cover-heart">♥</span>
+                </span>
+                <span class="cover-title">Laurie</span>
+                <span class="cover-subtitle">Happy Birthday, my queen</span>
+              </span>
+              <span class="book-face book-back cover-back">
+                <span class="page-number">With love</span>
+                <strong>Open every page slowly.</strong>
+                <span>This birthday wish was made only for you.</span>
+              </span>
+            </button>
+
+            <div class="book-flip book-sheet sheet-one">
+              <section class="book-face book-front note-page">
                 <p class="page-number">01</p>
                 <h3>My beautiful queen</h3>
                 <p>
@@ -104,7 +132,7 @@
                   loving, and amazing as you into my life.
                 </p>
               </section>
-              <section class="note-page note-page-two">
+              <section class="book-face book-back note-page">
                 <p class="page-number">02</p>
                 <h3>My safe place</h3>
                 <p>
@@ -112,81 +140,117 @@
                   smile even on my toughest days.
                 </p>
                 <p>
-                  Just thinking about you makes my heart skip a beat, and your
-                  love makes ordinary moments feel like home.
+                  Just thinking about you makes my heart skip a beat.
                 </p>
               </section>
-              <section class="note-page note-page-three">
+            </div>
+
+            <div class="book-flip book-sheet sheet-two">
+              <section class="book-face book-front note-page">
                 <p class="page-number">03</p>
                 <h3>My birthday prayer</h3>
                 <p>
                   I pray your life is filled with endless joy, good health,
                   success, laughter, and every beautiful dream you have wished for.
                 </p>
+                <p>You deserve the whole world and so much more, Laurie.</p>
+              </section>
+              <section class="book-face book-back note-page">
+                <p class="page-number">04</p>
+                <h3>When I see you</h3>
                 <p>
-                  You deserve the whole world and so much more, Laurie.
+                  I wish I could wrap my arms around you, look into your gorgeous
+                  eyes, whisper how much I love you, and never let you go.
+                </p>
+                <p>Every hug from you feels like home.</p>
+              </section>
+            </div>
+
+            <div class="book-flip book-sheet sheet-three">
+              <section class="book-face book-front note-page">
+                <p class="page-number">05</p>
+                <h3>The gift you are</h3>
+                <p>
+                  Your smile lights up my world, your voice is my favorite
+                  melody, and your love is the greatest gift I have ever received.
                 </p>
               </section>
-              <section class="note-page note-page-four">
-                <p class="page-number">04</p>
+              <section class="book-face book-back note-page">
+                <p class="page-number">06</p>
                 <h3>My promise</h3>
                 <p>
                   I promise to keep loving you, supporting you, protecting your
                   heart, making you laugh, and reminding you how special you are.
                 </p>
-                <p class="signature">I love you today, tomorrow, and forever.</p>
+                <p class="signature">Today, tomorrow, and forever.</p>
               </section>
             </div>
+            <button class="book-hit-area book-hit-left" id="prevPage" type="button" aria-label="Turn to the previous page"></button>
+            <button class="book-hit-area book-hit-right" id="nextPage" type="button" aria-label="Turn to the next page"></button>
+          </div>
+
+          <div class="book-controls" aria-label="Birthday book status">
+            <p id="pageStatus" aria-live="polite">Cover</p>
           </div>
         </article>
       </section>
 
       <section class="promise-band" aria-label="Birthday promises">
-        <div>
+        <div class="promise-card">
           <span>Love</span>
           <strong>deeper every day</strong>
+          <p>Choosing you again and again.</p>
         </div>
-        <div>
+        <div class="promise-card">
           <span>Joy</span>
           <strong>in every moment</strong>
+          <p>More laughter, dancing, and soft memories.</p>
         </div>
-        <div>
+        <div class="promise-card">
           <span>Home</span>
           <strong>in every hug</strong>
+          <p>The safest place is close to you.</p>
         </div>
-        <div>
+        <div class="promise-card">
           <span>Forever</span>
           <strong>with my birthday girl</strong>
+          <p>Today, tomorrow, and all the days after.</p>
         </div>
       </section>
 
       <section class="letter" aria-labelledby="letter-title">
-        <p class="eyebrow">The full birthday wish</p>
-        <h2 id="letter-title">For Laurie, with all my heart</h2>
-        <div class="letter-grid">
-          <p>
-            I wish I could be there right now to wrap my arms around you, look
-            into your gorgeous eyes, whisper how much I love you, steal a few
-            sweet kisses, and never let you go. Every hug from you feels like
-            home, and every kiss leaves me wanting another.
-          </p>
-          <p>
-            You are the most breathtaking woman I have ever known, and every day
-            you make me fall even deeper in love with you. Your smile lights up
-            my world, your voice is my favorite melody, and your love is the
-            greatest gift I have ever received.
-          </p>
-          <p>
-            I promise to keep loving you, supporting you, protecting your heart,
-            making you laugh, and reminding you every single day just how
-            special and irresistible you are.
-          </p>
-          <p>
-            So enjoy your day, my birthday girl. Dance, laugh, smile, and make
-            beautiful memories because today belongs to you. When we are finally
-            together, I will be making up for every hug, every kiss, and every
-            moment we have been apart.
-          </p>
+        <div class="letter-card">
+          <div class="letter-topline">
+            <p class="eyebrow">The full birthday wish</p>
+            <span>sealed with love</span>
+          </div>
+          <h2 id="letter-title">For Laurie, with all my heart</h2>
+          <div class="letter-grid">
+            <p>
+              I wish I could be there right now to wrap my arms around you, look
+              into your gorgeous eyes, whisper how much I love you, steal a few
+              sweet kisses, and never let you go. Every hug from you feels like
+              home, and every kiss leaves me wanting another.
+            </p>
+            <p>
+              You are the most breathtaking woman I have ever known, and every day
+              you make me fall even deeper in love with you. Your smile lights up
+              my world, your voice is my favorite melody, and your love is the
+              greatest gift I have ever received.
+            </p>
+            <p>
+              I promise to keep loving you, supporting you, protecting your heart,
+              making you laugh, and reminding you every single day just how
+              special and irresistible you are.
+            </p>
+            <p>
+              So enjoy your day, my birthday girl. Dance, laugh, smile, and make
+              beautiful memories because today belongs to you. When we are finally
+              together, I will be making up for every hug, every kiss, and every
+              moment we have been apart.
+            </p>
+          </div>
+          <p class="letter-signature">Forever yours</p>
         </div>
       </section>
     </main>

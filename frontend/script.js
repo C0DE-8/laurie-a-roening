@@ -3,6 +3,10 @@ const context = canvas.getContext("2d");
 const card = document.querySelector("#birthdayCard");
 const openCardButton = document.querySelector("#openCard");
 const cardCover = document.querySelector("#cardCover");
+const bookFlips = Array.from(document.querySelectorAll(".book-flip"));
+const prevPageButton = document.querySelector("#prevPage");
+const nextPageButton = document.querySelector("#nextPage");
+const pageStatus = document.querySelector("#pageStatus");
 const celebrateButton = document.querySelector("#celebrate");
 const blowCandle = document.querySelector("#blowCandle");
 const cake = document.querySelector("#cake");
@@ -10,6 +14,7 @@ const cake = document.querySelector("#cake");
 const colors = ["#c8305d", "#f26f61", "#f7b733", "#137b7a", "#6f1739", "#fff2dc"];
 let pieces = [];
 let animationFrame;
+let bookPage = 0;
 
 function resizeCanvas() {
   const ratio = window.devicePixelRatio || 1;
@@ -61,19 +66,45 @@ function burstConfetti(amount = 140) {
   drawConfetti();
 }
 
-function openCard(options = {}) {
-  card.classList.add("is-open");
-  card.scrollIntoView({ behavior: options.instant ? "auto" : "smooth", block: "center" });
-  if (!options.quiet) {
-    burstConfetti(90);
+function updateBook() {
+  bookFlips.forEach((flip, index) => {
+    flip.classList.toggle("is-flipped", index < bookPage);
+    flip.style.zIndex = index < bookPage ? index + 1 : bookFlips.length + 2 - index;
+  });
+
+  card.classList.toggle("is-open", bookPage > 0);
+  prevPageButton.disabled = bookPage === 0;
+  nextPageButton.disabled = bookPage === bookFlips.length;
+  pageStatus.textContent = bookPage === 0 ? "Tap right side to open" : `Page ${bookPage} of ${bookFlips.length}`;
+}
+
+function setBookPage(nextPage, options = {}) {
+  const clampedPage = Math.max(0, Math.min(bookFlips.length, nextPage));
+  const didAdvance = clampedPage > bookPage;
+  bookPage = clampedPage;
+  updateBook();
+  card.scrollIntoView({ behavior: options.instant ? "auto" : "smooth", block: "start" });
+
+  if (didAdvance && !options.quiet) {
+    burstConfetti(70);
   }
 }
 
+function openCard(options = {}) {
+  setBookPage(Math.max(1, bookPage), options);
+}
+
 resizeCanvas();
+updateBook();
 
 window.addEventListener("resize", resizeCanvas);
 openCardButton.addEventListener("click", openCard);
-cardCover.addEventListener("click", openCard);
+cardCover.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setBookPage(bookPage + 1);
+});
+prevPageButton.addEventListener("click", () => setBookPage(bookPage - 1, { quiet: true }));
+nextPageButton.addEventListener("click", () => setBookPage(bookPage + 1));
 celebrateButton.addEventListener("click", () => burstConfetti(180));
 
 blowCandle.addEventListener("click", () => {
